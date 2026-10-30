@@ -33,6 +33,7 @@ body {
     border-radius: 16px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
     text-align: center;
+    box-sizing: border-box;
 }
 
 h1, h2 {
@@ -58,6 +59,7 @@ p {
     cursor: pointer;
     transition: all 0.2s ease;
     margin-bottom: 10px;
+    box-sizing: border-box;
 }
 
 .btn.primary {
@@ -83,6 +85,7 @@ p {
 .quiz-header {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     font-size: 0.9rem;
     color: #6b7280;
     margin-bottom: 10px;
@@ -101,6 +104,7 @@ p {
     font-size: 1rem;
     cursor: pointer;
     transition: all 0.2s;
+    box-sizing: border-box;
 }
 
 .option-btn:hover:not(:disabled) {
@@ -136,7 +140,7 @@ p {
     color: var(--vue-dark);
 }
 
-/* --- ESTILOS DO TIMER --- */
+/* BARRA DE TEMPO */
 .timer-bar-container {
     width: 100%;
     height: 8px;
@@ -165,35 +169,36 @@ p {
     color: #ef4444;
 }
 
-/* --- ESTILOS DA TELA DE RESULTADO --- */
+/* TELA DE RESULTADO CORRIGIDA */
 .result-card {
     background-color: #f9fafb;
     border-radius: 12px;
-    padding: 20px;
+    padding: 20px 15px;
     margin: 20px 0;
     border: 1px solid var(--border-color);
 }
 
 .score-circle {
-    width: 100px;
-    height: 100px;
+    width: 110px;
+    height: 110px;
     border-radius: 50%;
     background: var(--vue-green);
     color: white;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.8rem;
+    font-size: 2rem;
     font-weight: bold;
     margin: 0 auto 15px;
     box-shadow: 0 4px 12px rgba(66, 184, 131, 0.3);
 }
 
 .feedback-message {
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     font-weight: 600;
     color: var(--vue-dark);
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+    line-height: 1.4;
 }
 
 .stats-grid {
@@ -201,23 +206,28 @@ p {
     grid-template-columns: 1fr 1fr;
     gap: 10px;
     margin-top: 15px;
-    text-align: center;
 }
 
 .stat-item {
     background: white;
-    padding: 10px;
+    padding: 12px 8px;
     border-radius: 8px;
     border: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .stat-item span {
-    display: block;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     color: #6b7280;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .stat-item strong {
-    font-size: 1.2rem;
+    font-size: 1.15rem;
     color: var(--vue-dark);
 }
