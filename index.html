@@ -5,32 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vue Challenge - Seminário Prático</title>
     <link rel="stylesheet" href="style.css">
-    
+    <!-- LINK DA CDN DO VUE 3 -->
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <style>
-        [v-cloak] {
-            display: none !important;
-        }
-    </style>
 </head>
 <body>
     <div id="app" class="app-container" v-cloak>
+        <!-- TELA INICIAL -->
         <div v-if="currentScreen === 'start'" class="screen">
             <svg viewBox="0 0 128 128" width="60" height="60" style="margin-bottom: 15px;">
                 <path fill="#42b883" d="M78.8,10L64,35.4L49.2,10H0l64,110l64-110C128,10,78.8,10,78.8,10z"></path>
                 <path fill="#35495e" d="M78.8,10L64,35.4L49.2,10H25.6L64,76l38.4-66H78.8z"></path>
             </svg>
             <h1>Vue Challenge</h1>
-            <p style="margin-bottom: 25px;">Teste seus conhecimentos sobre o seminário de Vue.js com {{ questionsBank.length }} perguntas!</p>
+            <p style="margin-bottom: 25px;">Teste seus conhecimentos sobre o seminário de Vue.js com {{ questionsBank.length }} perguntas (15s por questão)!</p>
 
             <button @click="startQuiz" class="btn primary">Iniciar Desafio</button>
         </div>
 
+        <!-- TELA DO QUIZ -->
         <div v-else-if="currentScreen === 'quiz'" class="screen">
             <div class="quiz-header">
                 <span>Pergunta {{ currentQuestionIndex + 1 }}/{{ currentQuestions.length }}</span>
+                <span class="timer-text" :class="{ warning: timeLeft <= 5 }">⏱️ {{ timeLeft }}s</span>
                 <span>Pontos: {{ score }}</span>
             </div>
+
+            <!-- Barra de Progresso do Tempo -->
+            <div class="timer-bar-container">
+                <div 
+                    class="timer-bar" 
+                    :class="{ warning: timeLeft <= 5 }"
+                    :style="{ width: (timeLeft / 15 * 100) + '%' }"
+                ></div>
+            </div>
+
             <h2>{{ currentQuestion.question }}</h2>
             
             <div id="options-container">
@@ -47,6 +55,7 @@
             </div>
 
             <p v-if="answered" class="explanation">
+                <span v-if="timeOutOccurred">⌛ <strong>Tempo esgotado!</strong> </span>
                 💡 {{ currentQuestion.explanation }}
             </p>
 
@@ -59,12 +68,30 @@
             </button>
         </div>
 
+        <!-- TELA DE RESULTADO -->
         <div v-else-if="currentScreen === 'result'" class="screen">
-            <h2>Desafio Concluído!</h2>
-            <p class="final-score-text">
-                Sua pontuação: <strong>{{ score }}/{{ currentQuestions.length * POINTS_PER_QUESTION }}</strong>
-            </p>
+            <h2>Desafio Concluído! 🎉</h2>
             
+            <div class="result-card">
+                <div class="score-circle">
+                    {{ percentageScore }}%
+                </div>
+
+                <p class="feedback-message">{{ feedbackMessage }}</p>
+
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span>Pontuação Final</span>
+                        <strong>{{ score }}/{{ maxScore }}</strong>
+                    </div>
+                    <div class="stat-item">
+                        <span>Acertos</span>
+                        <strong>{{ correctAnswersCount }}/{{ currentQuestions.length }}</strong>
+                    </div>
+                </div>
+            </div>
+            
+            <button @click="startQuiz" class="btn primary">Tentar Novamente</button>
             <button @click="currentScreen = 'start'" class="btn secondary">Voltar ao Início</button>
         </div>
     </div>
