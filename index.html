@@ -55,7 +55,7 @@
             </div>
 
             <p v-if="answered" class="explanation">
-                <span v-if="timeOutOccurred">⌛ <strong>Tempo esgotado!</strong> </span>
+                <span v-if="timeOutOccurred">⌛ <strong>Tempo esgotado! Questão considerada errada.</strong><br></span>
                 💡 {{ currentQuestion.explanation }}
             </p>
 
@@ -82,11 +82,11 @@
                 <div class="stats-grid">
                     <div class="stat-item">
                         <span>Pontuação Final</span>
-                        <strong>{{ score }}/{{ maxScore }}</strong>
+                        <strong>{{ score }} / {{ maxScore }}</strong>
                     </div>
                     <div class="stat-item">
                         <span>Acertos</span>
-                        <strong>{{ correctAnswersCount }}/{{ currentQuestions.length }}</strong>
+                        <strong>{{ correctAnswersCount }} / {{ currentQuestions.length }}</strong>
                     </div>
                 </div>
             </div>
