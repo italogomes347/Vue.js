@@ -33,3 +33,6 @@ Um quiz interativo de perguntas e respostas sobre **Vue.js 3**, desenvolvido com
 ├── index.html   # Estrutura principal e templates do Vue
 ├── style.css    # Estilização visual e temas do Vue.js
 └── app.js       # Lógica do Quiz, banco de questões e temporizador
+
+
+- **Alexandre Lima · Davi Santos · Guilherme Santos · Andrei · Italo · Davi Moreira* 
