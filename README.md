@@ -20,9 +20,9 @@ Um quiz interativo de perguntas e respostas sobre **Vue.js 3**, desenvolvido com
 
 ##  Tecnologias Utilizadas
 
-- **HTML5** (Estrutura semântica com suporte a `v-cloak`)
-- **CSS3** (Design com CSS Variables e layouts responsivos em Flexbox/Grid)
-- **Vue.js 3** (Composition API via CDN com `ref`, `computed` e ciclo de vida)
+- **HTML** 
+- **CSS** 
+- **Vue.js **
 
 ---
 
