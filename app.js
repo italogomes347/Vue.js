@@ -60,22 +60,10 @@ createApp({
         explanation: "npm create vue@latest é o gerador oficial recomendado para iniciar novos projetos com Vite e Vue 3."
       },
       {
-        question: "Qual comando do terminal é utilizado para rodar o projeto localmente para testes?",
-        options: ["node -v", "npm install", "npm run dev", "npm start test"],
-        answer: 2,
-        explanation: "O comando 'npm run dev' inicia o servidor de desenvolvimento local para testar a aplicação no navegador."
-      },
-      {
         question: "Na construção da lista de tarefas (To-Do List), qual recurso foi usado para vincular o input com a nova tarefa?",
         options: ["v-model", "v-bind:input", "v-connect", "v-form"],
         answer: 0,
         explanation: "O v-model faz a vinculação bidirecional (two-way data binding) entre o campo de texto/checkbox e os dados."
-      },
-      {
-        question: "Na renderização da lista de tarefas, quais recursos são combinados no template?",
-        options: ["ref() e v-for", "v-if e v-else", "v-show e v-model", "computed() e reactive()"],
-        answer: 0,
-        explanation: "O ref() armazena o array de tarefas reativo no script e o v-for percorre esse array no template para renderizar os itens."
       },
       {
         question: "Para o contador de tarefas pendentes reagir automaticamente às alterações da lista, qual recurso do Vue foi utilizado?",
@@ -98,7 +86,7 @@ createApp({
 
     const currentQuestion = computed(() => currentQuestions.value[currentQuestionIndex.value] || {});
     
-    const maxScore = computed(() => (currentQuestions.value.length || 12) * POINTS_PER_QUESTION);
+    const maxScore = computed(() => (currentQuestions.value.length || 10) * POINTS_PER_QUESTION);
     const correctAnswersCount = computed(() => Math.round(score.value / POINTS_PER_QUESTION));
     const percentageScore = computed(() => {
       const max = maxScore.value;
