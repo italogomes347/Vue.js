@@ -140,7 +140,6 @@ p {
     color: var(--vue-dark);
 }
 
-/* BARRA DE TEMPO */
 .timer-bar-container {
     width: 100%;
     height: 8px;
@@ -169,7 +168,6 @@ p {
     color: #ef4444;
 }
 
-/* TELA DE RESULTADO CORRIGIDA */
 .result-card {
     background-color: #f9fafb;
     border-radius: 12px;
