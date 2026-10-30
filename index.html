@@ -50,8 +50,8 @@
                 </button>
             </div>
 
-            <p v-if="answered" class="explanation">
-                <span v-if="timeOutOccurred">⌛ <strong>Tempo esgotado! Questão considerada errada.</strong><br></span>
+            <p v-if="answered" class="explanation" :class="{ warning: timeOutOccurred }">
+                <span v-if="timeOutOccurred">⌛ <strong>Tempo esgotado! Questão anulada.</strong><br></span>
                 💡 {{ currentQuestion.explanation }}
             </p>
 
