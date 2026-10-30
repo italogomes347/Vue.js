@@ -5,36 +5,61 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vue Challenge - Seminário Prático</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 </head>
 <body>
-    <div class="app-container">
-        <div id="start-screen" class="screen">
+    <div id="app" class="app-container">
+        <div v-if="currentScreen === 'start'" class="screen">
             <svg viewBox="0 0 128 128" width="60" height="60" style="margin-bottom: 15px;">
                 <path fill="#42b883" d="M78.8,10L64,35.4L49.2,10H0l64,110l64-110C128,10,78.8,10,78.8,10z"></path>
                 <path fill="#35495e" d="M78.8,10L64,35.4L49.2,10H25.6L64,76l38.4-66H78.8z"></path>
             </svg>
             <h1>Vue Challenge</h1>
-            <p style="margin-bottom: 25px;">Teste seus conhecimentos sobre o seminário de Vue.js com 12 perguntas!</p>
+            <p style="margin-bottom: 25px;">Teste seus conhecimentos sobre o seminário de Vue.js com {{ questionsBank.length }} perguntas!</p>
 
-            <button id="start-btn" class="btn primary">Iniciar Desafio</button>
+            <button @click="startQuiz" class="btn primary">Iniciar Desafio</button>
         </div>
 
-        <div id="quiz-screen" class="screen hidden">
+        <div v-else-if="currentScreen === 'quiz'" class="screen">
             <div class="quiz-header">
-                <span id="question-tracker">Pergunta 1/12</span>
-                <span id="score-tracker">Pontos: 0</span>
+                <span>Pergunta {{ currentQuestionIndex + 1 }}/{{ currentQuestions.length }}</span>
+                <span>Pontos: {{ score }}</span>
             </div>
-            <h2 id="question-text">Texto da pergunta aqui?</h2>
-            <div id="options-container"></div>
-            <p id="explanation" class="explanation hidden"></p>
-            <button id="next-btn" class="btn primary hidden">Próxima Pergunta</button>
+            <h2>{{ currentQuestion.question }}</h2>
+            
+            <div id="options-container">
+                <button 
+                    v-for="(option, index) in currentQuestion.options" 
+                    :key="index"
+                    class="option-btn"
+                    :class="getOptionClass(index)"
+                    :disabled="answered"
+                    @click="selectAnswer(index)"
+                >
+                    {{ option }}
+                </button>
+            </div>
+
+            <p v-if="answered" class="explanation">
+                💡 {{ currentQuestion.explanation }}
+            </p>
+
+            <button 
+                v-if="answered" 
+                @click="handleNextQuestion" 
+                class="btn primary"
+            >
+                {{ currentQuestionIndex === currentQuestions.length - 1 ? 'Ver Resultado' : 'Próxima Pergunta' }}
+            </button>
         </div>
 
-        <div id="result-screen" class="screen hidden">
+        <div v-else-if="currentScreen === 'result'" class="screen">
             <h2>Desafio Concluído!</h2>
-            <p class="final-score-text">Sua pontuação: <strong id="final-score">0</strong></p>
+            <p class="final-score-text">
+                Sua pontuação: <strong>{{ score }}/{{ currentQuestions.length * POINTS_PER_QUESTION }}</strong>
+            </p>
             
-            <button id="home-btn" class="btn secondary">Voltar ao Início</button>
+            <button @click="currentScreen = 'start'" class="btn secondary">Voltar ao Início</button>
         </div>
     </div>
 
