@@ -124,6 +124,12 @@ p {
     color: white;
 }
 
+.option-btn.timeout {
+    border-color: #fca5a5;
+    background-color: #fef2f2;
+    color: #991b1b;
+}
+
 .option-btn:disabled {
     cursor: not-allowed;
 }
@@ -138,6 +144,11 @@ p {
     border-left: 4px solid var(--vue-green);
     border-radius: 8px;
     color: var(--vue-dark);
+}
+
+.explanation.warning {
+    background-color: #fef2f2;
+    border-left-color: #ef4444;
 }
 
 .timer-bar-container {
