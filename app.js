@@ -94,25 +94,26 @@ createApp({
     
     // Temporizador
     const timeLeft = ref(QUESTION_TIME_LIMIT);
-    const timerInterval = ref(null);
+    let timerInterval = null;
     const timeOutOccurred = ref(false);
 
     const currentQuestion = computed(() => currentQuestions.value[currentQuestionIndex.value] || {});
     
-    // Computados para Tela de Resultado
-    const maxScore = computed(() => currentQuestions.value.length * POINTS_PER_QUESTION);
+    // Estatísticas da Tela de Resultado
+    const maxScore = computed(() => (currentQuestions.value.length || 12) * POINTS_PER_QUESTION);
     const correctAnswersCount = computed(() => Math.round(score.value / POINTS_PER_QUESTION));
     const percentageScore = computed(() => {
-      if (!maxScore.value) return 0;
-      return Math.round((score.value / maxScore.value) * 100);
+      const max = maxScore.value;
+      if (!max) return 0;
+      return Math.round((score.value / max) * 100);
     });
 
     const feedbackMessage = computed(() => {
       const pct = percentageScore.value;
-      if (pct === 100) return "Incrível! Você é um mestre no Vue.js! 🚀";
-      if (pct >= 80) return "Muito bem! Excelente domínio dos conteúdos! 👏";
-      if (pct >= 50) return "Bom trabalho! Deu para pegar bastante da apresentação. 👍";
-      return "Vale a pena dar mais uma olhada nos slides e tentar de novo! 📚";
+      if (pct === 100) return "Incrível! Você acertou todas as questões! 🚀";
+      if (pct >= 75) return "Muito bem! Excelente desempenho no seminário! 👏";
+      if (pct >= 50) return "Bom trabalho! Teve um bom aproveitamento. 👍";
+      return "Vale a pena revisar os slides do seminário e tentar novamente! 📚";
     });
 
     function shuffle(array) {
@@ -129,10 +130,11 @@ createApp({
       timeLeft.value = QUESTION_TIME_LIMIT;
       timeOutOccurred.value = false;
 
-      timerInterval.value = setInterval(() => {
-        if (timeLeft.value > 0) {
+      timerInterval = setInterval(() => {
+        if (timeLeft.value > 1) {
           timeLeft.value--;
         } else {
+          timeLeft.value = 0;
           stopTimer();
           handleTimeOut();
         }
@@ -140,19 +142,20 @@ createApp({
     }
 
     function stopTimer() {
-      if (timerInterval.value) {
-        clearInterval(timerInterval.value);
-        timerInterval.value = null;
+      if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
       }
     }
 
     function handleTimeOut() {
       timeOutOccurred.value = true;
       answered.value = true;
-      selectedAnswerIndex.value = null;
+      selectedAnswerIndex.value = null; // Nenhuma opção marcada pois o tempo acabou
     }
 
     function startQuiz() {
+      stopTimer();
       currentQuestions.value = shuffle(questionsBank).map((q) => {
         const options = shuffle(
           q.options.map((text, i) => ({ text, correct: i === q.answer }))
@@ -187,7 +190,9 @@ createApp({
 
     function getOptionClass(index) {
       if (!answered.value) return "";
+      // Se acertou ou se acabou o tempo, mostra a resposta correta em verde
       if (index === currentQuestion.value.answer) return "correct";
+      // Se marcou errado, mostra a escolhida em vermelho
       if (index === selectedAnswerIndex.value) return "wrong";
       return "";
     }
