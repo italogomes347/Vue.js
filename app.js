@@ -190,6 +190,7 @@ createApp({
       if (!answered.value) return "";
       if (index === currentQuestion.value.answer) return "correct";
       if (index === selectedAnswerIndex.value) return "wrong";
+      if (timeOutOccurred.value) return "timeout";
       return "";
     }
 
