@@ -92,14 +92,12 @@ createApp({
     const selectedAnswerIndex = ref(null);
     const answered = ref(false);
     
-    // Temporizador
     const timeLeft = ref(QUESTION_TIME_LIMIT);
     let timerInterval = null;
     const timeOutOccurred = ref(false);
 
     const currentQuestion = computed(() => currentQuestions.value[currentQuestionIndex.value] || {});
     
-    // Estatísticas da Tela de Resultado
     const maxScore = computed(() => (currentQuestions.value.length || 12) * POINTS_PER_QUESTION);
     const correctAnswersCount = computed(() => Math.round(score.value / POINTS_PER_QUESTION));
     const percentageScore = computed(() => {
@@ -151,7 +149,7 @@ createApp({
     function handleTimeOut() {
       timeOutOccurred.value = true;
       answered.value = true;
-      selectedAnswerIndex.value = null; // Nenhuma opção marcada pois o tempo acabou
+      selectedAnswerIndex.value = -1;
     }
 
     function startQuiz() {
@@ -190,9 +188,7 @@ createApp({
 
     function getOptionClass(index) {
       if (!answered.value) return "";
-      // Se acertou ou se acabou o tempo, mostra a resposta correta em verde
       if (index === currentQuestion.value.answer) return "correct";
-      // Se marcou errado, mostra a escolhida em vermelho
       if (index === selectedAnswerIndex.value) return "wrong";
       return "";
     }
