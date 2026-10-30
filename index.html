@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue Challenge</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <div id="start-screen" class="screen">
+            <svg viewBox="0 0 128 128" width="60" height="60" style="margin-bottom: 15px;">
+                <path fill="#42b883" d="M78.8,10L64,35.4L49.2,10H0l64,110l64-110C128,10,78.8,10,78.8,10z"></path>
+                <path fill="#35495e" d="M78.8,10L64,35.4L49.2,10H25.6L64,76l38.4-66H78.8z"></path>
+            </svg>
+            <h1>Vue Challenge</h1>
+            <p style="margin-bottom: 25px;">Teste seus conhecimentos sobre Vue.js com 10 perguntas!</p>
+
+            <button id="start-btn" class="btn primary">Iniciar Desafio</button>
+        </div>
+
+        <div id="quiz-screen" class="screen hidden">
+            <div class="quiz-header">
+                <span id="question-tracker">Pergunta 1/10</span>
+                <span id="score-tracker">Pontos: 0</span>
+            </div>
+            <h2 id="question-text">Texto da pergunta aqui?</h2>
+            <div id="options-container">
+            </div>
+            <p id="explanation" class="explanation hidden"></p>
+            <button id="next-btn" class="btn primary hidden">Próxima Pergunta</button>
+        </div>
+
+        <div id="result-screen" class="screen hidden">
+            <h2>Desafio Concluído!</h2>
+            <p class="final-score-text">Sua pontuação: <strong id="final-score">0</strong></p>
+            
+            <button id="home-btn" class="btn secondary">Voltar ao Início</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
