@@ -6,7 +6,7 @@ Um quiz interativo de perguntas e respostas sobre **Vue.js 3**, desenvolvido com
 
 ## Funcionalidades
 
-- **12 Perguntas Personalizadas**: Baseadas nos temas abordados na apresentação (Conceitos, Comandos, Composition API e To-Do List).
+- **10 Perguntas Personalizadas**: Baseadas nos temas abordados na apresentação (Conceitos, Comandos, Composition API e To-Do List).
 - **Temporizador de 15 Segundos**: Tempo limite para responder a cada questão. Caso o tempo esgote, a questão é automaticamente considerada errada/anulada e a resposta correta é revelada.
 - **Perguntas e Respostas Aleatórias**: A ordem das perguntas e das opções muda a cada nova tentativa.
 - **Explicações Detalhadas**: Cada pergunta exibe um comentário explicativo após a resposta ser selecionada ou o tempo esgotar.
