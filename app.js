@@ -1,8 +1,9 @@
-const { createApp, ref, computed } = Vue;
+const { createApp, ref, computed, onUnmounted } = Vue;
 
 createApp({
   setup() {
     const POINTS_PER_QUESTION = 10;
+    const QUESTION_TIME_LIMIT = 15;
 
     const questionsBank = [
       {
@@ -90,8 +91,29 @@ createApp({
     const score = ref(0);
     const selectedAnswerIndex = ref(null);
     const answered = ref(false);
+    
+    // Temporizador
+    const timeLeft = ref(QUESTION_TIME_LIMIT);
+    const timerInterval = ref(null);
+    const timeOutOccurred = ref(false);
 
     const currentQuestion = computed(() => currentQuestions.value[currentQuestionIndex.value] || {});
+    
+    // Computados para Tela de Resultado
+    const maxScore = computed(() => currentQuestions.value.length * POINTS_PER_QUESTION);
+    const correctAnswersCount = computed(() => Math.round(score.value / POINTS_PER_QUESTION));
+    const percentageScore = computed(() => {
+      if (!maxScore.value) return 0;
+      return Math.round((score.value / maxScore.value) * 100);
+    });
+
+    const feedbackMessage = computed(() => {
+      const pct = percentageScore.value;
+      if (pct === 100) return "Incrível! Você é um mestre no Vue.js! 🚀";
+      if (pct >= 80) return "Muito bem! Excelente domínio dos conteúdos! 👏";
+      if (pct >= 50) return "Bom trabalho! Deu para pegar bastante da apresentação. 👍";
+      return "Vale a pena dar mais uma olhada nos slides e tentar de novo! 📚";
+    });
 
     function shuffle(array) {
       const copy = [...array];
@@ -100,6 +122,34 @@ createApp({
         [copy[i], copy[j]] = [copy[j], copy[i]];
       }
       return copy;
+    }
+
+    function startTimer() {
+      stopTimer();
+      timeLeft.value = QUESTION_TIME_LIMIT;
+      timeOutOccurred.value = false;
+
+      timerInterval.value = setInterval(() => {
+        if (timeLeft.value > 0) {
+          timeLeft.value--;
+        } else {
+          stopTimer();
+          handleTimeOut();
+        }
+      }, 1000);
+    }
+
+    function stopTimer() {
+      if (timerInterval.value) {
+        clearInterval(timerInterval.value);
+        timerInterval.value = null;
+      }
+    }
+
+    function handleTimeOut() {
+      timeOutOccurred.value = true;
+      answered.value = true;
+      selectedAnswerIndex.value = null;
     }
 
     function startQuiz() {
@@ -119,9 +169,14 @@ createApp({
       answered.value = false;
       selectedAnswerIndex.value = null;
       currentScreen.value = "quiz";
+
+      startTimer();
     }
 
     function selectAnswer(index) {
+      if (answered.value) return;
+      
+      stopTimer();
       selectedAnswerIndex.value = index;
       answered.value = true;
 
@@ -142,10 +197,16 @@ createApp({
         currentQuestionIndex.value++;
         answered.value = false;
         selectedAnswerIndex.value = null;
+        startTimer();
       } else {
+        stopTimer();
         currentScreen.value = "result";
       }
     }
+
+    onUnmounted(() => {
+      stopTimer();
+    });
 
     return {
       POINTS_PER_QUESTION,
@@ -156,6 +217,12 @@ createApp({
       currentQuestion,
       score,
       answered,
+      timeLeft,
+      timeOutOccurred,
+      maxScore,
+      correctAnswersCount,
+      percentageScore,
+      feedbackMessage,
       startQuiz,
       selectAnswer,
       getOptionClass,
