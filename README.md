@@ -1,4 +1,5 @@
 # Vue Challenge - Quiz Interativo
+- **Alexandre Lima · Davi Santos · Guilherme Santos · Andrei · Italo · Davi Moreira** 
 
 Um quiz interativo de perguntas e respostas sobre **Vue.js 3**, desenvolvido como complemento prático para apresentação de seminário. O desafio conta com temporizador por questão, embaralhamento automático de perguntas e opções, e tela final com feedback detalhado de desempenho.
 
@@ -32,6 +33,5 @@ Um quiz interativo de perguntas e respostas sobre **Vue.js 3**, desenvolvido com
 .
 ├── index.html   # Estrutura principal e templates do Vue
 ├── style.css    # Estilização visual e temas do Vue.js
-└── app.js       # Lógica do Quiz, banco de questões e temporizador´´´
+└── app.js       # Lógica do Quiz, banco de questões e temporizador
 
-Alexandre Lima · Davi Santos · Guilherme Santos · Andrei · Italo · Davi Moreira
