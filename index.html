@@ -5,12 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vue Challenge - Seminário Prático</title>
     <link rel="stylesheet" href="style.css">
-    <!-- LINK DA CDN DO VUE 3 -->
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 </head>
 <body>
     <div id="app" class="app-container" v-cloak>
-        <!-- TELA INICIAL -->
         <div v-if="currentScreen === 'start'" class="screen">
             <svg viewBox="0 0 128 128" width="60" height="60" style="margin-bottom: 15px;">
                 <path fill="#42b883" d="M78.8,10L64,35.4L49.2,10H0l64,110l64-110C128,10,78.8,10,78.8,10z"></path>
@@ -22,7 +20,6 @@
             <button @click="startQuiz" class="btn primary">Iniciar Desafio</button>
         </div>
 
-        <!-- TELA DO QUIZ -->
         <div v-else-if="currentScreen === 'quiz'" class="screen">
             <div class="quiz-header">
                 <span>Pergunta {{ currentQuestionIndex + 1 }}/{{ currentQuestions.length }}</span>
@@ -30,7 +27,6 @@
                 <span>Pontos: {{ score }}</span>
             </div>
 
-            <!-- Barra de Progresso do Tempo -->
             <div class="timer-bar-container">
                 <div 
                     class="timer-bar" 
@@ -68,7 +64,6 @@
             </button>
         </div>
 
-        <!-- TELA DE RESULTADO -->
         <div v-else-if="currentScreen === 'result'" class="screen">
             <h2>Desafio Concluído! 🎉</h2>
             
